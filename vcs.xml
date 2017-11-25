@@ -14,8 +14,12 @@
           <option name="url" value="https://github.com/photonstorm/phaser-ce.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/Runecreed/runecreed.github.io" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="D:\Documents\Kevin Prive\Website\" />
+    <option name="cloneParentDir" value="D:\Github Project Repository\webTech" />
   </component>
 </application>
