@@ -1,0 +1,9 @@
+<toolSet name="External Tools">
+  <tool name="ESLint Fix" description="Fix Source Folder" showInMainMenu="true" showInEditor="true" showInProject="true" showInSearchPopup="true" disabled="false" useConsole="true" showConsoleOnStdOut="true" showConsoleOnStdErr="false" synchronizeAfterRun="true">
+    <exec>
+      <option name="COMMAND" value="C:\Users\Runecreed\AppData\Roaming\npm\eslint.cmd" />
+      <option name="PARAMETERS" value="--fix &quot;$ProjectFileDir$\src\js\*.js&quot;" />
+      <option name="WORKING_DIRECTORY" value="$ProjectFileDir$" />
+    </exec>
+  </tool>
+</toolSet>
