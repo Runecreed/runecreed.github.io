@@ -76,7 +76,6 @@ __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* eslint-disable sort-keys,no-magic-numbers */
 function addImage(URL) {
   var element = document.createElement("div");
   var text = document.createTextNode("hello everyone I have been added!");
@@ -100,8 +99,9 @@ function getImageURL(input) {
 }
 
 (0, _jquery.default)(document).ready(function (e) {
-  (0, _jquery.default)("#imgInp").change(function () {
-    getImageURL(this);
+  var imageInput = (0, _jquery.default)("#imgInp");
+  imageInput.change(function (selection) {
+    getImageURL(imageInput.get(0));
   });
 });
 
