@@ -1,17 +1,31 @@
+/* eslint-disable sort-keys,no-magic-numbers */
 import $ from "jquery";
 import "../css/bootstrap.css";
 
-function addImage() {
+
+function addImage(URL) {
     let element = document.createElement("div");
     let text = document.createTextNode("hello everyone I have been added!");
     element.appendChild(text);
 
     let img = document.createElement("img");
-    img.src = "http://www.google.com/intl/en_com/images/logo_plain.png";
+    img.src = URL;
     $(element).appendTo($("body"));
+    $(img).appendTo($("body"));
 }
 
-$(document).ready(function () {
-    addImage();
-});
+function getImageURL(input){
+    if (input.files && input.files[0]) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            $('#blah').attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$(document).ready(function (e) {
 
+    $("#imgInp").change(function() {
+        getImageURL(this);
+    });
+});
