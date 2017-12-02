@@ -128,5 +128,4 @@ typings/
 .idea
 .vscode
 
-dist/*
 !/src/
