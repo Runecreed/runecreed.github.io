@@ -1,0 +1,8 @@
+@echo off
+ECHO DEPLOYING DIST FOLDER TO MASTER BRANCH FOR GH PAGES
+ECHO PURGING MASTER BRANCH
+git push origin :master
+ECHO UPLOADING DISTRIBUTION FOLDER
+git subtree push --prefix dist origin master
+ECHO STATUS REPORT
+git status

@@ -13,5 +13,8 @@ run deploy to publish to gh-pages
 
 steps to deploy:
 
-remove the master branch
+//remove the master branch
 git push origin :master
+
+//push the dist folder to it
+git subtree push --prefix dist origin master
