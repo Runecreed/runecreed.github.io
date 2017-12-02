@@ -127,3 +127,6 @@ typings/
 .DS_Store
 .idea
 .vscode
+
+dist/*
+!/src/

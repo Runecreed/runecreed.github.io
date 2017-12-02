@@ -1,16 +1,24 @@
-import $ from "jquery";
-import "../css/bootstrap.css";
+// Attach JS to HTML file, causes our bundler to include the first html
+import "../html/index.html";
+import $ from 'jquery'; //  Redundant but good for esLint support
+import './plugins.js'; // Load jquery plugins
+import 'materialize-css/dist/js/materialize.min.js';
+import 'materialize-css/dist/css/materialize.min.css';
 
 
-function addImage(URL) {
+//  Import images
+import panda from '../img/panda.gif';
+
+function addImage() {
+    let $body = $("body");
     let element = document.createElement("div");
     let text = document.createTextNode("hello everyone I have been added!");
     element.appendChild(text);
+    let pandaImage = new Image();
+    pandaImage.src = panda;
 
-    let img = document.createElement("img");
-    img.src = URL;
-    $(element).appendTo($("body"));
-    $(img).appendTo($("body"));
+    $(element).appendTo($body);
+    $(pandaImage).appendTo($body);
 }
 
 function getImageURL(input) {
@@ -24,8 +32,12 @@ function getImageURL(input) {
 }
 
 $(document).ready(function (e) {
-
     $("#imgInp").change(function (selection) {
         getImageURL(this);
     });
+    addImage();
+
+    $('#modal1').modal('open');
 });
+
+// addImage('./src/img/panda.gif');

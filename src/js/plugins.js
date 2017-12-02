@@ -1,4 +1,6 @@
 // Avoid `console` errors in browsers that lack a console.
+import $ from "jquery";
+
 (function() {
     var method;
     var noop = function () {};
@@ -21,4 +23,10 @@
     }
 }());
 
-// Place any jQuery/helper plugins in here.
+/* Place any jQuery/helper plugins in here.
+ This function is only executed when the DOM is ready, so it loads when ready.
+*/
+$(function() {
+    $('.parallax').parallax();
+    $('.modal').modal();
+});
