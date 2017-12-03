@@ -10831,32 +10831,7 @@ function getImageURL(input) {
 
 var map;
 
-function initialize(googleMap) {
-  var mapOptions = {
-    zoom: 15,
-    mapTypeId: googleMap.MapTypeId.ROADMAP
-  };
-  map = new googleMap.Map((0, _jquery.default)('#map-canvas'), mapOptions); // try HTML5 geolocation
-
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      var pos = new googleMap.LatLng(position.coords.latitude, position.coords.longitude);
-      var infowindow = new googleMap.InfoWindow({
-        map: map,
-        position: pos,
-        content: 'Location found using HTML5.'
-      });
-      map.setCenter(pos);
-    }, function () {
-      handleNoGeolocation(true);
-    });
-  } else {
-    // browser doesn't support geolocation
-    handleNoGeolocation(false);
-  }
-}
-
-function handleNoGeolocation(errorFlag) {
+function handleNoGeolocation(errorFlag, googleMap) {
   if (errorFlag) {
     var content = 'Error: The Geolocation service failed.';
   } else {
@@ -10868,8 +10843,33 @@ function handleNoGeolocation(errorFlag) {
     position: new googleMap.LatLng(60, 105),
     content: content
   };
-  var infowindow = new google.maps.InfoWindow(options);
+  var infowindow = new googleMap.InfoWindow(options);
   map.setCenter(options.position);
+}
+
+function initialize(googleMap) {
+  var mapOptions = {
+    zoom: 15,
+    mapTypeId: googleMap.MapTypeId.ROADMAP
+  };
+  map = new googleMap.Map((0, _jquery.default)('#map-canvas')[0], mapOptions); // try HTML5 geolocation
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      var pos = new googleMap.LatLng(position.coords.latitude, position.coords.longitude);
+      var infowindow = new googleMap.InfoWindow({
+        map: map,
+        position: pos,
+        content: 'Location found using HTML5.'
+      });
+      map.setCenter(pos);
+    }, function () {
+      handleNoGeolocation(true, googleMap);
+    });
+  } else {
+    // browser doesn't support geolocation
+    handleNoGeolocation(false, googleMap);
+  }
 }
 
 (0, _loadGoogleMapsApi.default)({
@@ -10878,23 +10878,32 @@ function handleNoGeolocation(errorFlag) {
   console.log(googleMap); // => Object { Animation: Object, ...
   // When promise is returned, initialize the map if the browser is ready.
 
-  googleMap.event.addDomListener(window, 'load', initialize(googleMap));
+  googleMap.event.addDomListener(window, "load", initialize(googleMap));
 }).catch(function (err) {
   console.error(err);
 });
-(0, _jquery.default)(document).ready(function (e) {
-  (0, _jquery.default)("#imgInp").change(function (selection) {
-    getImageURL(this);
+
+function enhance(target) {
+  var $target = (0, _jquery.default)(target);
+  console.log($target);
+  $target.addClass("scale-out").delay(1000).queue(function () {
+    $target.removeClass("scale-out").dequeue();
   });
+}
+
+(0, _jquery.default)(document).ready(function (e) {
   addImage();
   (0, _jquery.default)('#modal1').modal('open');
+  (0, _jquery.default)('#enhance').click(function (event) {
+    enhance(event.target);
+  });
 }); // addImage('./src/img/panda.gif');
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1.0\"/>\r\n    <title>Starter Template - Materialize</title>\r\n\r\n    <!-- CSS  -->\r\n    <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">\r\n    <!--Dont think i need these since webpack imports css -->\r\n    <!--<link href=\"css/materialize.css\" type=\"text/css\" rel=\"stylesheet\" media=\"screen,projection\"/>-->\r\n    <!--<link href=\"css/style.css\" type=\"text/css\" rel=\"stylesheet\" media=\"screen,projection\"/>-->\r\n</head>\r\n<body>\r\n<nav class=\"light-blue lighten-1\" role=\"navigation\">\r\n    <div class=\"nav-wrapper container\"><a id=\"logo-container\" href=\"#\" class=\"brand-logo\">Logo</a>\r\n        <ul class=\"right hide-on-med-and-down\">\r\n            <li><a href=\"#\">Navbar Link</a></li>\r\n        </ul>\r\n\r\n        <ul id=\"nav-mobile\" class=\"side-nav\">\r\n            <li><a href=\"#\">Navbar Link</a></li>\r\n        </ul>\r\n        <a href=\"#\" data-activates=\"nav-mobile\" class=\"button-collapse\"><i class=\"material-icons\">menu</i></a>\r\n    </div>\r\n</nav>\r\n<div class=\"section no-pad-bot\" id=\"index-banner\">\r\n    <div class=\"container\">\r\n        <br><br>\r\n        <h1 class=\"header center orange-text\">Starter Template</h1>\r\n        <div class=\"row center\">\r\n            <h5 class=\"header col s12 light\">A modern responsive front-end framework based on Material Design</h5>\r\n        </div>\r\n        <div class=\"row center\">\r\n            <a href=\"http://materializecss.com/getting-started.html\" id=\"download-button\"\r\n               class=\"btn-large waves-effect waves-light orange\">Get Started</a>\r\n        </div>\r\n        <br><br>\r\n\r\n    </div>\r\n</div>\r\n\r\n\r\n<div class=\"container\">\r\n    <div class=\"section\">\r\n\r\n        <!--   Icon Section   -->\r\n        <div class=\"row\">\r\n            <div class=\"col s12 m4\">\r\n                <div class=\"icon-block\">\r\n                    <h2 class=\"center light-blue-text\"><i class=\"material-icons\">flash_on</i></h2>\r\n                    <h5 class=\"center\">Speeds up development</h5>\r\n\r\n                    <p class=\"light\">We did most of the heavy lifting for you to provide a default stylings that\r\n                        incorporate our custom components. Additionally, we refined animations and transitions to\r\n                        provide a smoother experience for developers.</p>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col s12 m4\">\r\n                <div class=\"icon-block\">\r\n                    <h2 class=\"center light-blue-text\"><i class=\"material-icons\">group</i></h2>\r\n                    <h5 class=\"center\">User Experience Focused</h5>\r\n\r\n                    <p class=\"light\">By utilizing elements and principles of Material Design, we were able to create a\r\n                        framework that incorporates components and animations that provide more feedback to users.\r\n                        Additionally, a single underlying responsive system across all platforms allow for a more\r\n                        unified user experience.</p>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col s12 m4\">\r\n                <div class=\"icon-block\">\r\n                    <h2 class=\"center light-blue-text\"><i class=\"material-icons\">settings</i></h2>\r\n                    <h5 class=\"center\">Easy to work with</h5>\r\n\r\n                    <p class=\"light\">We have provided detailed documentation as well as specific code examples to help\r\n                        new users get started. We are also always open to feedback and can answer any questions a user\r\n                        may have about Materialize.</p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n\r\n    </div>\r\n    <br><br>\r\n</div>\r\n\r\n<footer class=\"page-footer orange\">\r\n    <div class=\"container\">\r\n\r\n        <!-- Modal Trigger -->\r\n        <a class=\"waves-effect waves-light btn modal-trigger\" href=\"#modal1\">Modal</a>\r\n\r\n        <!-- Modal Structure -->\r\n        <div id=\"modal1\" class=\"modal bottom-sheet\">\r\n            <div class=\"modal-content\">\r\n                <h4>Modal Header</h4>\r\n                <p>A bunch of text</p>\r\n            </div>\r\n            <div class=\"modal-footer\">\r\n                <a href=\"#!\" class=\"modal-action modal-close waves-effect waves-green btn-flat\">Agree</a>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"row\">\r\n            <div class=\"col l6 s12\">\r\n                <h5 class=\"white-text\">Company Bio</h5>\r\n                <p class=\"grey-text text-lighten-4\">We are a team of college students working on this project like it's\r\n                    our full time job. Any amount would help support and continue development on this project and is\r\n                    greatly appreciated.</p>\r\n\r\n\r\n            </div>\r\n            <div class=\"col l3 s12\">\r\n                <h5 class=\"white-text\">Settings</h5>\r\n                <ul>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 1</a></li>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 2</a></li>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 3</a></li>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 4</a></li>\r\n                </ul>\r\n            </div>\r\n            <div class=\"col l3 s12\">\r\n                <h5 class=\"white-text\">Connect</h5>\r\n                <ul>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 1</a></li>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 2</a></li>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 3</a></li>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 4</a></li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"container\">\r\n        <div id=\"map-canvas\"></div>\r\n\r\n    </div>\r\n    <div class=\"footer-copyright\">\r\n        <div class=\"container\">\r\n            Made by <a class=\"orange-text text-lighten-3\" href=\"http://materializecss.com\">Materialize</a>\r\n        </div>\r\n    </div>\r\n</footer>\r\n\r\n\r\n<!--  Scripts-->\r\n<!--<script src=\"https://code.jquery.com/jquery-2.1.1.min.js\"></script>-->\r\n<!--<script src=\"js/materialize.js\"></script>-->\r\n<!--<script src=\"js/init.js\"></script>-->\r\n\r\n<!--loader takes care of it-->\r\n<script src=\"bundle.js\"></script>\r\n</body>\r\n</html>\r\n";
+module.exports = "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1.0\"/>\r\n    <title>Starter Template - Materialize</title>\r\n\r\n    <!-- CSS  -->\r\n    <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">\r\n    <!--Dont think i need these since webpack imports css -->\r\n    <!--<link href=\"css/materialize.css\" type=\"text/css\" rel=\"stylesheet\" media=\"screen,projection\"/>-->\r\n    <!--<link href=\"css/style.css\" type=\"text/css\" rel=\"stylesheet\" media=\"screen,projection\"/>-->\r\n</head>\r\n<body>\r\n<nav class=\"light-blue lighten-1\" role=\"navigation\">\r\n    <div class=\"nav-wrapper container\"><a id=\"logo-container\" href=\"#\" class=\"brand-logo\">Logo</a>\r\n        <ul class=\"right hide-on-med-and-down\">\r\n            <li><a href=\"#\">Navbar Link</a></li>\r\n        </ul>\r\n\r\n        <ul id=\"nav-mobile\" class=\"side-nav\">\r\n            <li><a href=\"#\">Navbar Link</a></li>\r\n        </ul>\r\n        <a href=\"#\" data-activates=\"nav-mobile\" class=\"button-collapse\"><i class=\"material-icons\">menu</i></a>\r\n    </div>\r\n</nav>\r\n<div class=\"section no-pad-bot\" id=\"index-banner\">\r\n    <div class=\"container\">\r\n        <br><br>\r\n        <h1 class=\"header center orange-text\">Starter Template</h1>\r\n        <div class=\"row center\">\r\n            <h5 class=\"header col s12 light\">A modern responsive front-end framework based on Material Design</h5>\r\n        </div>\r\n        <div class=\"row center\">\r\n            <a href=\"http://materializecss.com/getting-started.html\" id=\"download-button\"\r\n               class=\"btn-large waves-effect waves-light orange\">Get Started</a>\r\n        </div>\r\n        <br><br>\r\n\r\n    </div>\r\n</div>\r\n\r\n\r\n<div class=\"container\">\r\n    <div class=\"section\">\r\n\r\n        <!--   Icon Section   -->\r\n        <div class=\"row\">\r\n            <div class=\"col s12 m4\">\r\n                <div class=\"icon-block\">\r\n                    <h2 class=\"center light-blue-text\"><i class=\"material-icons\">flash_on</i></h2>\r\n                    <h5 class=\"center\">Speeds up development</h5>\r\n\r\n                    <p class=\"light\">We did most of the heavy lifting for you to provide a default stylings that\r\n                        incorporate our custom components. Additionally, we refined animations and transitions to\r\n                        provide a smoother experience for developers.</p>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col s12 m4\">\r\n                <div class=\"icon-block\">\r\n                    <h2 class=\"center light-blue-text\"><i class=\"material-icons\">group</i></h2>\r\n                    <h5 class=\"center\">User Experience Focused</h5>\r\n\r\n                    <p class=\"light\">By utilizing elements and principles of Material Design, we were able to create a\r\n                        framework that incorporates components and animations that provide more feedback to users.\r\n                        Additionally, a single underlying responsive system across all platforms allow for a more\r\n                        unified user experience.</p>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col s12 m4\">\r\n                <div class=\"icon-block\">\r\n                    <h2 class=\"center light-blue-text\"><i class=\"material-icons\">settings</i></h2>\r\n                    <h5 class=\"center\">Easy to work with</h5>\r\n\r\n                    <p class=\"light\">We have provided detailed documentation as well as specific code examples to help\r\n                        new users get started. We are also always open to feedback and can answer any questions a user\r\n                        may have about Materialize.</p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n\r\n    </div>\r\n    <br><br>\r\n</div>\r\n\r\n<footer class=\"page-footer orange\">\r\n    <div class=\"container\">\r\n\r\n        <!-- Modal Trigger -->\r\n        <a class=\"waves-effect waves-light btn modal-trigger\" href=\"#modal1\">Modal</a>\r\n\r\n        <!-- Modal Structure -->\r\n        <div id=\"modal1\" class=\"modal bottom-sheet\">\r\n            <div class=\"modal-content\">\r\n                <h4>Modal Header</h4>\r\n                <p>A bunch of text</p>\r\n            </div>\r\n            <button id=\"enhance\" class=\"waves-effect waves-light btn-large scale-transition\">CLICK ME REMOVE ME FANCILY</button>\r\n            <div class=\"modal-footer\">\r\n                <a href=\"#!\" class=\"modal-action modal-close waves-effect waves-green btn-flat\">Agree</a>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"row\">\r\n            <div class=\"col l6 s12\">\r\n                <h5 class=\"white-text\">Company Bio</h5>\r\n                <p class=\"grey-text text-lighten-4\">We are a team of college students working on this project like it's\r\n                    our full time job. Any amount would help support and continue development on this project and is\r\n                    greatly appreciated.</p>\r\n\r\n\r\n            </div>\r\n            <div class=\"col l3 s12\">\r\n                <h5 class=\"white-text\">Settings</h5>\r\n                <ul>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 1</a></li>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 2</a></li>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 3</a></li>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 4</a></li>\r\n                </ul>\r\n            </div>\r\n            <div class=\"col l3 s12\">\r\n                <h5 class=\"white-text\">Connect</h5>\r\n                <ul>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 1</a></li>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 2</a></li>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 3</a></li>\r\n                    <li><a class=\"white-text\" href=\"#!\">Link 4</a></li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"container\">\r\n        <div id=\"map-canvas\"></div>\r\n\r\n    </div>\r\n    <div class=\"footer-copyright\">\r\n        <div class=\"container\">\r\n            Made by <a class=\"orange-text text-lighten-3\" href=\"http://materializecss.com\">Materialize</a>\r\n        </div>\r\n    </div>\r\n</footer>\r\n\r\n\r\n<!--  Scripts-->\r\n<!--<script src=\"https://code.jquery.com/jquery-2.1.1.min.js\"></script>-->\r\n<!--<script src=\"js/materialize.js\"></script>-->\r\n<!--<script src=\"js/init.js\"></script>-->\r\n\r\n<!--Webpack creates the script tags for me don't manually do it as that will duplicate -->\r\n\r\n</body>\r\n</html>\r\n";
 
 /***/ }),
 /* 5 */
@@ -13883,7 +13892,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "/* Custom Stylesheet */\r\n/**\r\n * Use this file to override Materialize files so you can update\r\n * the core Materialize files in the future\r\n *\r\n * Made By MaterializeCSS.com\r\n */\r\n\r\n.icon-block {\r\n  padding: 0 15px;\r\n}\r\n.icon-block .material-icons {\r\n\tfont-size: inherit;\r\n}\r\n\r\n#map-canvas {\r\n    width: 100%;\r\n    height: 300px;\r\n    margin: 0;\r\n    padding: 15px;\r\n}\r\n", ""]);
+exports.push([module.i, "/* Custom Stylesheet */\r\n/**\r\n * Use this file to override Materialize files so you can update\r\n * the core Materialize files in the future\r\n *\r\n * Made By MaterializeCSS.com\r\n */\r\n\r\n.icon-block {\r\n  padding: 0 15px;\r\n}\r\n.icon-block .material-icons {\r\n\tfont-size: inherit;\r\n}\r\n\r\n#map-canvas {\r\n    width: 100%;\r\n    height: 300px;\r\n    margin: 0;\r\n    padding: 15px;\r\n}\r\n\r\n.modal {\r\n    color: black;\r\n\r\n}", ""]);
 
 // exports
 
