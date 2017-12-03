@@ -6,6 +6,8 @@
  * Made By MaterializeCSS.com
  */
 
+
+
 .icon-block {
   padding: 0 15px;
 }
@@ -18,9 +20,20 @@
     height: 300px;
     margin: 0;
     padding: 15px;
+    color: black;
 }
 
 .modal {
     color: black;
 
+}
+
+header, main, footer {
+    padding-left: 300px;
+}
+
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
 }

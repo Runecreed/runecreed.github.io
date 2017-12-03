@@ -1,9 +1,10 @@
 // Avoid `console` errors in browsers that lack a console.
 import $ from "jquery";
-
-(function() {
+window.jQuery = window.$ = require('jquery');
+(function () {
     var method;
-    var noop = function () {};
+    var noop = function () {
+    };
     var methods = [
         "assert", "clear", "count", "debug", "dir", "dirxml", "error",
         "exception", "group", "groupCollapsed", "groupEnd", "info", "log",
@@ -26,7 +27,7 @@ import $ from "jquery";
 /* Place any jQuery/helper plugins in here.
  This function is only executed when the DOM is ready, so it loads when ready.
 */
-$(function() {
+$(function () {
     $('.parallax').parallax();
     $('.modal').modal();
 });
