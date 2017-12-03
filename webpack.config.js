@@ -63,15 +63,19 @@ module.exports = {
                         attrs: [':data-src']
                     }
                 }
-            }
+            },
+
         ]
     },
     plugins: [
+
         new webpack.ProvidePlugin({
             $: 'jquery',
-            jQuery: 'jquery'
+            jQuery: 'jquery',
+            "window.jQuery": "jquery",
+            "window.$": "jquery"
         }),
-        new HtmlWebpackPlugin({  // generate the index html
+        new HtmlWebpackPlugin({  // generate the index html as a copy from my source code to the dist folder
             filename: 'index.html',
             template: 'src/html/index.html'
         })

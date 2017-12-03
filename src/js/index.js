@@ -13,15 +13,15 @@ import panda from '../img/panda.gif';
 
 
 function addImage() {
-    let $body = $("body");
+    let $content = $(".content");
     let element = document.createElement("div");
     let text = document.createTextNode("hello everyone I have been added!");
     element.appendChild(text);
     let pandaImage = new Image();
     pandaImage.src = panda;
 
-    $(element).appendTo($body);
-    $(pandaImage).appendTo($body);
+    $(element).appendTo($content);
+    $(pandaImage).appendTo($content);
 }
 
 function getImageURL(input) {
@@ -45,6 +45,8 @@ function enhance(target) {
 
 
 $(document).ready(function (e) {
+
+    let $sideMenu = $('#navButton');
     addImage();
 
     $('#modal1').modal('open');
@@ -53,12 +55,15 @@ $(document).ready(function (e) {
         enhance(event.target);
     });
 
-    $('#navButton').sideNav({
-        menuWidth: 300, // Default is 300
-        edge: 'right', // Choose the horizontal origin
+    $sideMenu.sideNav({
+        menuWidth: 200, // Default is 300
+        edge: 'left', // Choose the horizontal origin
         closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-        draggable: false // Choose whether you can drag to open on touch screens,
+        draggable: true // Choose whether you can drag to open on touch screens,
     });
+
+
+
 
 });
 

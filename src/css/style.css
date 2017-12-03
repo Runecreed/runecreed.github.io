@@ -28,12 +28,13 @@
 
 }
 
-header, main, footer {
-    padding-left: 300px;
+/* match the width of the side bar */
+.content {
+    padding-left: 200px;
 }
 
 @media only screen and (max-width : 992px) {
-    header, main, footer {
+    .content {
         padding-left: 0;
     }
 }

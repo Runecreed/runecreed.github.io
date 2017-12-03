@@ -1,6 +1,6 @@
 // Avoid `console` errors in browsers that lack a console.
-import $ from "jquery";
-window.jQuery = window.$ = require('jquery');
+import $ from "jquery"; // Only do this to satisfy esLint
+
 (function () {
     var method;
     var noop = function () {
