@@ -28,6 +28,15 @@ import $ from "jquery"; // Only do this to satisfy esLint
  This function is only executed when the DOM is ready, so it loads when ready.
 */
 $(function () {
+
+    $('.carousel').carousel({
+        "dist": 0,
+
+        "padding": 20
+
+    });
     $('.parallax').parallax();
     $('.modal').modal();
+    $('.materialboxed').materialbox();
+
 });
