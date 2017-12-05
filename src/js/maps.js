@@ -1,7 +1,13 @@
 import $ from "jquery";
 import loadGoogleMapsApi from "load-google-maps-api-2";
+import Promise from 'promise-polyfill';
 
 let map;
+
+//  Need to attach Promise functionality for older browsers
+if (!window.Promise) {
+    window.Promise = Promise;
+}
 
 function handleNoGeolocation(errorFlag, googleMap) {
     let content;
@@ -70,7 +76,6 @@ loadGoogleMapsApi({'key': 'AIzaSyATSH5MpScAOz-t1vPrAFMuqqhKU5RsvaQ'}).then(funct
     console.log(googleMap); // => Object { Animation: Object, ...
     // When promise is returned, initialize the map if the browser is ready.
     googleMap.event.addDomListener(window, "load", initialize(googleMap));
-}).
-    catch(function (err) {
-        console.error(err);
-    });
+}).catch(function (err) {
+    console.error(err);
+});
