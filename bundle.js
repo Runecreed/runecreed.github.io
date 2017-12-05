@@ -10826,11 +10826,11 @@ __webpack_require__(11);
 
 __webpack_require__(24);
 
-var _numberToWords = _interopRequireDefault(__webpack_require__(26));
+var _numberToWords = _interopRequireDefault(__webpack_require__(27));
 
-__webpack_require__(28);
+__webpack_require__(29);
 
-var _panda = _interopRequireDefault(__webpack_require__(30));
+var _panda = _interopRequireDefault(__webpack_require__(31));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10838,7 +10838,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //  Redundant but good for esLint support
 // Load jquery plugins
 //  Import images
-var caroucelItems = 1; //  Number of items in the caroucel initially
+var thumbnails = 0; //  Number thumbnails displayed
 
 function addImage() {
   var $content = (0, _jquery.default)(".content");
@@ -10861,7 +10861,8 @@ function getImageURL(input) {
 
     reader.readAsDataURL(input.files[0]);
   }
-}
+} // not used atm
+
 
 function enhance(target) {
   var $target = (0, _jquery.default)(target);
@@ -10871,9 +10872,10 @@ function enhance(target) {
   });
 }
 
-function resetCarousel() {
-  (0, _jquery.default)('.carousel').removeClass("initialized");
-  (0, _jquery.default)('.carousel').carousel();
+function appear(target) {
+  var $target = (0, _jquery.default)(target);
+  console.log($target);
+  $target.removeClass("scale-out");
 }
 
 function dropzoneConfig() {
@@ -10898,18 +10900,45 @@ function dropzoneConfig() {
   }); // When a thumbnail is made
 
   myDropzone.on('thumbnail', function (file, dataUri) {
+    var addRow;
+    var column = (0, _jquery.default)('<div/>', {
+      "class": 'col s12 m4'
+    });
     var substrings = ['png', 'jpg', 'gif', 'svg'];
 
     if (substrings.some(function (v) {
       return dataUri.toString().indexOf(v) >= 0;
     })) {
       // The added file is an image type
-      var $images = (0, _jquery.default)('.images');
-      var newImage = "<img class=\"materialboxed\" src=".concat(dataUri, ">");
-      $images.append(newImage); //  new element added, reinitialize the method
+      thumbnails += 1; // Increase counter
 
-      (0, _jquery.default)('.materialboxed').materialbox();
-    }
+      if (thumbnails % 3 === 1) {
+        // Added image goes to a new row
+        addRow = (0, _jquery.default)('<div/>', {
+          "class": 'row'
+        }).append(column);
+      }
+
+      var $images = (0, _jquery.default)('.images');
+      var $newImage = (0, _jquery.default)("<img class=\"materialboxed imageThumbnail scale-transition scale-out\" src=".concat(dataUri, ">"));
+      column.append($newImage);
+
+      if (addRow) {
+        // Add a new row to the container with the image in a column
+        $images.append(addRow);
+      } else {
+        // No new row needed, just add the column to the last row present in the image Display
+        $images.children().last().append(column);
+      } //  New element added, reinitialize the method
+
+
+      (0, _jquery.default)('.materialboxed').materialbox(); // fancy show of the image
+
+      window.setTimeout(function () {
+        return appear($newImage);
+      }, 200); // .2 seconds
+    } // Not an image
+
   }); // When file is added
 
   myDropzone.on("addedfile", function (file) {// Hookup the start button
@@ -10923,14 +10952,44 @@ function dropzoneConfig() {
   //  This means that you dont need methods for cancel and remove.
 }
 
-(0, _jquery.default)(document).ready(function (e) {
-  var $sideMenu = (0, _jquery.default)('#navButton');
-  addImage();
-  dropzoneConfig();
-  (0, _jquery.default)('#modal1').modal('open');
-  (0, _jquery.default)('#enhance').click(function (event) {
-    enhance(event.target);
+function onScroll(event) {
+  var scrollPos = (0, _jquery.default)(document).scrollTop();
+  (0, _jquery.default)('.nav a').each(function () {
+    var currLink = (0, _jquery.default)(this);
+    var refElement = (0, _jquery.default)(currLink.attr("href"));
+
+    if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
+      (0, _jquery.default)('.nav a').removeClass("active");
+      currLink.addClass("active");
+    } else {
+      currLink.removeClass("active");
+    }
   });
+}
+
+(0, _jquery.default)(document).ready(function (e) {
+  (0, _jquery.default)(document).on("scroll", onScroll); //smoothscroll
+
+  (0, _jquery.default)('a[href^="#"]').on('click', function (e) {
+    e.preventDefault();
+    (0, _jquery.default)(document).off("scroll");
+    (0, _jquery.default)('a').each(function () {
+      (0, _jquery.default)(this).removeClass('active');
+    });
+    (0, _jquery.default)(this).addClass('active');
+    var target = this.hash,
+        $target = (0, _jquery.default)(target);
+    (0, _jquery.default)('html, body').stop().animate({
+      'scrollTop': $target.offset().top + 2
+    }, 500, 'swing', function () {
+      window.location.hash = target;
+      (0, _jquery.default)(document).on("scroll", onScroll);
+    });
+  });
+  dropzoneConfig(); // Initialize the side navigation menu
+
+  var $sideMenu = (0, _jquery.default)('#navButton');
+  (0, _jquery.default)('#modal1').modal('open');
   $sideMenu.sideNav({
     "menuWidth": 200,
     // Default is 300
@@ -10941,13 +11000,16 @@ function dropzoneConfig() {
     "draggable": true // Choose whether you can drag to open on touch screens,
 
   });
+  (0, _jquery.default)('#enhance').click(function () {
+    enhance((0, _jquery.default)(this));
+  });
 }); // AddImage('./src/img/panda.gif');
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1.0\"/>\r\n    <title>Starter Template - Materialize</title>\r\n\r\n    <!-- CSS  -->\r\n    <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">\r\n    <!--Dont think i need these since webpack imports css -->\r\n    <!--<link href=\"css/materialize.css\" type=\"text/css\" rel=\"stylesheet\" media=\"screen,projection\"/>-->\r\n    <!--<link href=\"css/style.css\" type=\"text/css\" rel=\"stylesheet\" media=\"screen,projection\"/>-->\r\n</head>\r\n<body>\r\n\r\n\r\n<nav class=\"light-blue lighten-1\" role=\"navigation\">\r\n    <div class=\"nav-wrapper container\">\r\n        <a id=\"logo-container\" href=\"#\" class=\"brand-logo right\">Logo</a>\r\n\r\n        <!--side menu-->\r\n\r\n        <ul id=\"slide-out\" class=\"side-nav fixed\">\r\n            <li><a href=\"#!\">First Sidebar Link</a></li>\r\n            <li><a href=\"#!\">Second Sidebar Link</a></li>\r\n        </ul>\r\n        <a href=\"#\" data-activates=\"slide-out\" class=\"button-collapse\" id=\"navButton\"><i class=\"material-icons\">menu</i></a>\r\n\r\n    </div>\r\n\r\n\r\n</nav>\r\n<div class=\"content\">\r\n    <div class=\"section no-pad-bot\" id=\"index-banner\">\r\n        <div class=\"container\">\r\n            <br><br>\r\n            <h1 class=\"header center orange-text\">Starter Template</h1>\r\n            <div class=\"row center\">\r\n                <h5 class=\"header col s12 light\">A modern responsive front-end framework based on Material Design</h5>\r\n            </div>\r\n            <div class=\"row center\">\r\n                <a href=\"http://materializecss.com/getting-started.html\" id=\"download-button\"\r\n                   class=\"btn-large waves-effect waves-light orange\">Get Started</a>\r\n            </div>\r\n            <br><br>\r\n\r\n        </div>\r\n    </div>\r\n\r\n\r\n    <div class=\"container\">\r\n        <div class=\"section\">\r\n\r\n            <!--   Icon Section   -->\r\n            <div class=\"row\">\r\n                <div class=\"col s12 m4\">\r\n                    <div class=\"icon-block\">\r\n                        <h2 class=\"center light-blue-text\"><i class=\"material-icons\">flash_on</i></h2>\r\n                        <h5 class=\"center\">Speeds up development</h5>\r\n\r\n                        <p class=\"light\">We did most of the heavy lifting for you to provide a default stylings that\r\n                            incorporate our custom components. Additionally, we refined animations and transitions to\r\n                            provide a smoother experience for developers.</p>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"col s12 m4\">\r\n                    <div class=\"icon-block\">\r\n                        <h2 class=\"center light-blue-text\"><i class=\"material-icons\">group</i></h2>\r\n                        <h5 class=\"center\">User Experience Focused</h5>\r\n\r\n                        <p class=\"light\">By utilizing elements and principles of Material Design, we were able to create\r\n                            a\r\n                            framework that incorporates components and animations that provide more feedback to users.\r\n                            Additionally, a single underlying responsive system across all platforms allow for a more\r\n                            unified user experience.</p>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"col s12 m4\">\r\n                    <div class=\"icon-block\">\r\n                        <h2 class=\"center light-blue-text\"><i class=\"material-icons\">settings</i></h2>\r\n                        <h5 class=\"center\">Easy to work with</h5>\r\n\r\n                        <p class=\"light\">We have provided detailed documentation as well as specific code examples to\r\n                            help\r\n                            new users get started. We are also always open to feedback and can answer any questions a\r\n                            user\r\n                            may have about Materialize.</p>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n\r\n        <div class='section'>\r\n            <div class=\"row\">\r\n                <div class=\"col s12 center card-panel teal lighten-2 pulse\">\r\n                    <form action=\"/file-upload\"\r\n                          id=\"dropzone\">Click me to upload files\r\n                    </form>\r\n                </div>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"images\">\r\n          <img class=\"materialboxed\" src=\"https://lorempixel.com/250/250/nature/1\">\r\n        </div>\r\n\r\n        <div  class=\"files\" id=\"previews\">\r\n            <div id=\"template\" class=\"file-row\">\r\n                <!-- This is used as the file preview template -->\r\n                <div>\r\n                    <span class=\"preview\"><img data-dz-thumbnail /></span>\r\n                </div>\r\n                <div>\r\n                    <p class=\"name\" data-dz-name></p>\r\n                    <strong class=\"error text-danger\" data-dz-errormessage></strong>\r\n                </div>\r\n                <div>\r\n                    <p class=\"size\" data-dz-size></p>\r\n                    <div class=\"progress progress-striped active\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\" aria-valuenow=\"0\">\r\n                        <div class=\"progress-bar progress-bar-success\" style=\"width:0%;\" data-dz-uploadprogress></div>\r\n                    </div>\r\n                </div>\r\n                <div>\r\n                    <button class='btn start'>\r\n                        <span>Start</span>\r\n                    </button>\r\n                    <button data-dz-remove class=\"btn cancel\">\r\n                        <span>Cancel</span>\r\n                    </button>\r\n                    <button data-dz-remove class=\"btn\">\r\n\r\n                        <span>Delete</span>\r\n                    </button>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n\r\n\r\n    <footer class=\"page-footer orange\">\r\n        <div class=\"container\">\r\n\r\n            <!-- Modal Trigger -->\r\n            <a class=\"waves-effect waves-light btn modal-trigger\" href=\"#modal1\">Modal</a>\r\n\r\n            <!-- Modal Structure -->\r\n            <div id=\"modal1\" class=\"modal bottom-sheet\">\r\n                <div class=\"modal-content\">\r\n                    <h4>Modal Header</h4>\r\n                    <p>A bunch of text</p>\r\n                </div>\r\n                <button id=\"enhance\" class=\"waves-effect waves-light btn-large scale-transition\">CLICK ME REMOVE ME\r\n                    FANCILY\r\n                </button>\r\n                <div class=\"modal-footer\">\r\n                    <a href=\"#!\" class=\"modal-action modal-close waves-effect waves-green btn-flat\">Agree</a>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n                <div class=\"col l6 s12\">\r\n                    <h5 class=\"white-text\">Company Bio</h5>\r\n                    <p class=\"grey-text text-lighten-4\">We are a team of college students working on this project like\r\n                        it's\r\n                        our full time job. Any amount would help support and continue development on this project and is\r\n                        greatly appreciated.</p>\r\n\r\n\r\n                </div>\r\n                <div class=\"col l3 s12\">\r\n                    <h5 class=\"white-text\">Settings</h5>\r\n                    <ul>\r\n                        <li><a class=\"white-text\" href=\"#!\">Link 1</a></li>\r\n                        <li><a class=\"white-text\" href=\"#!\">Link 2</a></li>\r\n                        <li><a class=\"white-text\" href=\"#!\">Link 3</a></li>\r\n                        <li><a class=\"white-text\" href=\"#!\">Link 4</a></li>\r\n                    </ul>\r\n                </div>\r\n                <div class=\"col l3 s12\">\r\n                    <h5 class=\"white-text\">Connect</h5>\r\n                    <ul>\r\n                        <li><a class=\"white-text\" href=\"#!\">Link 1</a></li>\r\n                        <li><a class=\"white-text\" href=\"#!\">Link 2</a></li>\r\n                        <li><a class=\"white-text\" href=\"#!\">Link 3</a></li>\r\n                        <li><a class=\"white-text\" href=\"#!\">Link 4</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"container\">\r\n            <div id=\"map-canvas\"></div>\r\n\r\n        </div>\r\n        <div class=\"footer-copyright\">\r\n            <div class=\"container\">\r\n                Made by <a class=\"orange-text text-lighten-3\" href=\"http://materializecss.com\">Materialize</a>\r\n            </div>\r\n        </div>\r\n    </footer>\r\n</div>\r\n\r\n<!--  Scripts-->\r\n<!--<script src=\"https://code.jquery.com/jquery-2.1.1.min.js\"></script>-->\r\n<!--<script src=\"js/materialize.js\"></script>-->\r\n<!--<script src=\"js/init.js\"></script>-->\r\n\r\n<!--Webpack creates the script tags for me don't manually do it as that will duplicate -->\r\n\r\n</body>\r\n</html>\r\n";
+module.exports = "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1.0\"/>\r\n    <title>Starter Template - Materialize</title>\r\n\r\n    <!-- CSS  -->\r\n    <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">\r\n    <!--Dont think i need these since webpack imports css -->\r\n    <!--<link href=\"css/materialize.css\" type=\"text/css\" rel=\"stylesheet\" media=\"screen,projection\"/>-->\r\n    <!--<link href=\"css/style.css\" type=\"text/css\" rel=\"stylesheet\" media=\"screen,projection\"/>-->\r\n</head>\r\n<body>\r\n<!-- Modal Structure -->\r\n<div id=\"modal1\" class=\"modal bottom-sheet \">\r\n    <div class=\"modal-content\">\r\n        <h4>This is a Modal</h4>\r\n        <p>For now this servers as a proof of concept, it may be useful in the future for say contact information or as a settings menu</p>\r\n    </div>\r\n    <button id=\"enhance\" class=\"waves-effect waves-light btn-large scale-transition\">I am animated!\r\n    </button>\r\n    <div class=\"modal-footer\">\r\n        <a  class=\"modal-action modal-close waves-effect waves-green btn-flat\">Click me to close, or anywhere outside the modal</a>\r\n    </div>\r\n</div>\r\n\r\n<nav class=\"black darken-4 \" role=\"navigation\">\r\n    <div class=\"nav-wrapper  container\">\r\n        <div class=\"nav-wrapper\">\r\n            <a class=\"brand-logo\">My Logo </a>\r\n            <ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\">\r\n                <li><a href=\"#index-banner\">Section 1</a></li>\r\n                <li><a href=\"#information\">Section 2</a></li>\r\n                <li><a href=\"#uploads\">Section 3</a></li>\r\n                <li><a class=\"waves-effect  waves-light modal-trigger\" href=\"#modal1\">About</a></li>\r\n            </ul>\r\n\r\n            <!-- Modal Trigger -->\r\n\r\n\r\n            <!--side menu-->\r\n            <ul id=\"slide-out\" class=\"side-nav fixed border-right light-green lighten-4\">\r\n                <li><a href=\"#index-banner\">Section 1</a></li>\r\n                <li><a href=\"#information\">Section 2</a></li>\r\n                <li><a href=\"#uploads\">Section 3</a></li>\r\n                <li><a class=\"waves-effect  waves-light modal-trigger\" href=\"#modal1\">About</a></li>\r\n                <li class='navBottom'><a class=\"waves-effect  waves-light modal-trigger\" href=\"#modal1\">About</a></li>\r\n\r\n            </ul>\r\n            <a  data-activates=\"slide-out\" class=\"button-collapse\" id=\"navButton\"><i\r\n                    class=\"material-icons\">menu</i></a>\r\n        </div>\r\n    </div>\r\n\r\n</nav>\r\n\r\n<div class=\"content green lighten-5\">\r\n    <div class=\"section no-pad-bot green lighten-4 \" id=\"index-banner\">\r\n        <div class=\"container\">\r\n            <br><br>\r\n            <h1 class=\"header center orange-text\">Welcome!</h1>\r\n            <div class=\"row center\">\r\n                <h5 class=\"header col s12 light white-text\">This site is an in-progress project. The final aim is to display a gallery</h5>\r\n            </div>\r\n            <div class=\"row center\">\r\n            </div>\r\n            <br><br>\r\n\r\n        </div>\r\n    </div>\r\n\r\n\r\n    <div class=\"container\">\r\n        <div id=\"information\" class=\"section\">\r\n\r\n            <!--   Icon Section   -->\r\n            <div class=\"row\">\r\n                <div class=\"col s12 m4\">\r\n                    <div class=\"icon-block\">\r\n                        <h2 class=\"center light-blue-text\"><i class=\"material-icons\">flash_on</i></h2>\r\n                        <h5 class=\"center\">Functionality so Far</h5>\r\n\r\n                        <p class=\"light\"> The website has a responsive layout in that it automatically can adjust\r\n                            to the browser's screen, making it adapt for mobile usage. Ths sidebar is useful for navigation. It remains\r\n                        visible for large-enough screens so that even when scrolling down on the page the user can easily navigate\r\n                        around.\r\n                        Files can be uploaded to the site (static, there is no backend yet), when it is an image it is displayed.\r\n                        The image can be zoomed in on by clicking it.</p>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"col s12 m4\">\r\n                    <div class=\"icon-block\">\r\n                        <h2 class=\"center light-blue-text\"><i class=\"material-icons\">group</i></h2>\r\n                        <h5 class=\"center\">Interactivity</h5>\r\n\r\n                        <p class=\"light\">Currently the user can scroll through the page using the navigation links on the top header, or side\r\n                            navigation. Doing so will smoothly redirect them to the section on the page that the link refers to. The website currently\r\n                        takes in drag-and-drop files (of any kind), it checks if it is able to display a thumbnail for that file type (JPEG, PNG, GIF, ..).\r\n                        If it can, the image will be displayed after processing in a neat grid layout. The sidebar can be dragged in for mobile users.\r\n                        Furthermore, when clicking the 'about' link a modal wil open displaying information regarding the site, perhaps contact info at a later date.\r\n                            <br> <br> Try it! drag an image onto the site, it will be displayed in Section 2. Alternatively you can click the upload button below </p>\r\n                    </div>\r\n\r\n                </div>\r\n\r\n                <div class=\"col s12 m4\">\r\n                    <div class=\"icon-block\">\r\n                        <h2 class=\"center light-blue-text\"><i class=\"material-icons\">settings</i></h2>\r\n                        <h5 class=\"center\">Playground</h5>\r\n\r\n                        <p class=\"light\"> I am experimenting with different plugins and API's. I have settled on the Dropzone.js module for file handling.\r\n                        The website uses a Materialize template that uses a grid layout and jQuery plugins for interactive elements, that respond\r\n                        nicely for different screen sizes.\r\n                        I initially focused on having a robust deployment setup using Webpack for combining my files and modules into a single bundle, this includes\r\n                            loaders for files, HTML pages, Javascript, CSS and custom fonts. Using Babel I'm able to write my code in ECMAScript 6 and still support\r\n                            older browsers. This setup allows me to have a modularized approach while making it easy to compile the final site and upload it to\r\n                            github pages. Of course I use a git repository for version control, making it easy to revert when problems arise.\r\n                        </p>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n\r\n        <div id=\"uploads\" class='section'>\r\n            <div class=\"row\">\r\n                <div class=\"col s12 center card-panel teal lighten-2\">\r\n                    <form action=\"/file-upload\"\r\n                          id=\"dropzone\">Click me to upload files, or just drag and drop to anywhere on the page\r\n                    </form>\r\n                </div>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"images \">\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"files\" id=\"previews\">\r\n        <div id=\"template\" class=\"file-row\">\r\n            <!-- This is used as the file preview template -->\r\n            <div>\r\n                <span class=\"preview\"><img data-dz-thumbnail/></span>\r\n            </div>\r\n            <div>\r\n                <p class=\"name\" data-dz-name></p>\r\n                <strong class=\"error text-danger\" data-dz-errormessage></strong>\r\n            </div>\r\n            <div>\r\n                <p class=\"size\" data-dz-size></p>\r\n                <div class=\"progress progress-striped active\" role=\"progressbar\" aria-valuemin=\"0\"\r\n                     aria-valuemax=\"100\" aria-valuenow=\"0\">\r\n                    <div class=\"progress-bar progress-bar-success\" style=\"width:0%;\" data-dz-uploadprogress></div>\r\n                </div>\r\n            </div>\r\n            <div>\r\n                <button class='btn start'>\r\n                    <span>Start</span>\r\n                </button>\r\n                <button data-dz-remove class=\"btn cancel\">\r\n                    <span>Cancel</span>\r\n                </button>\r\n                <button data-dz-remove class=\"btn\">\r\n\r\n                    <span>Delete</span>\r\n                </button>\r\n            </div>\r\n        </div>\r\n\r\n    </div>\r\n\r\n\r\n    <footer class=\"page-footer orange\">\r\n        <div class=\"container\">\r\n\r\n\r\n            <div class=\"row\">\r\n                <div class=\"col l6 s12\">\r\n                    <h5 class=\"white-text\">Fancy section for more functionality</h5>\r\n                    <p class=\"grey-text text-lighten-4\">Currently this section is simply reserved for testing out new modules.\r\n                    For instance below I have used the Google Maps API to display your current location with a marker on the exact place, as found\r\n                    by the HTML5 navigator GPS functionality if enabled/available. If it cannot be found the area will simply display Eindhoven. You\r\n                    can click on the marker for a pop-up with some text.</p>\r\n\r\n\r\n                </div>\r\n                <div class=\"col l3 s12\">\r\n                    <h5 class=\"white-text\">Placeholder links</h5>\r\n                    <ul>\r\n                        <li><a class=\"white-text\">Link 1</a></li>\r\n                        <li><a class=\"white-text\" >Link 2</a></li>\r\n                        <li><a class=\"white-text\" >Link 3</a></li>\r\n                        <li><a class=\"white-text\" >Link 4</a></li>\r\n                    </ul>\r\n                </div>\r\n                <div class=\"col l3 s12\">\r\n                    <h5 class=\"white-text\">Some more sectioning</h5>\r\n                    <ul>\r\n                        <li><a class=\"white-text\">Link 1</a></li>\r\n                        <li><a class=\"white-text\" >Link 2</a></li>\r\n                        <li><a class=\"white-text\" >Link 3</a></li>\r\n                        <li><a class=\"white-text\" >Link 4</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"container\">\r\n            <div id=\"map-canvas\"></div>\r\n\r\n        </div>\r\n        <div class=\"footer-copyright\">\r\n            <div class=\"container\">\r\n                This website has been made using an initial template from <a class=\"orange-text text-lighten-3\" href=\"http://materializecss.com\">Materialize</a>\r\n            , Work in Progress for a fully fledged gallery type of site.\r\n            </div>\r\n        </div>\r\n    </footer>\r\n</div>\r\n\r\n<!--  Scripts-->\r\n<!--<script src=\"https://code.jquery.com/jquery-2.1.1.min.js\"></script>-->\r\n<!--<script src=\"js/materialize.js\"></script>-->\r\n<!--<script src=\"js/init.js\"></script>-->\r\n\r\n<!--Webpack creates the script tags for me don't manually do it as that will duplicate -->\r\n\r\n</body>\r\n</html>\r\n";
 
 /***/ }),
 /* 6 */
@@ -17714,7 +17776,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "/* Custom Stylesheet */\r\n/**\r\n * Use this file to override Materialize files so you can update\r\n * the core Materialize files in the future\r\n *\r\n * Made By MaterializeCSS.com\r\n */\r\n\r\n\r\n\r\n.icon-block {\r\n  padding: 0 15px;\r\n}\r\n.icon-block .material-icons {\r\n\tfont-size: inherit;\r\n}\r\n\r\n#map-canvas {\r\n    width: 100%;\r\n    height: 300px;\r\n    margin: 0;\r\n    padding: 15px;\r\n    color: black;\r\n}\r\n\r\n.modal {\r\n    color: black;\r\n\r\n}\r\n\r\n/* match the width of the side bar */\r\n.content {\r\n    padding-left: 200px;\r\n}\r\n\r\n@media only screen and (max-width : 992px) {\r\n    .content {\r\n        padding-left: 0;\r\n    }\r\n}\r\n", ""]);
+exports.push([module.i, "/* Custom Stylesheet */\r\n/**\r\n * Use this file to override Materialize files so you can update\r\n * the core Materialize files in the future\r\n *\r\n * Made By MaterializeCSS.com\r\n */\r\n\r\n.side-nav.border-right {\r\n    border-right: black solid medium;\r\n}\r\n.brand-logo {\r\n    margin-left: 10%;\r\n}\r\n.imageThumbnail {\r\n    width: 100%;\r\n    height: 100%;\r\n}\r\n\r\n#index-banner {\r\n\r\n    background: linear-gradient(\r\n            rgba(0, 160, 0, 0.45),\r\n            rgba(0, 160, 0, 0.45)\r\n    ),\r\n    url(" + __webpack_require__(26) + ");\r\n\r\n    background-size: cover;\r\n\r\n}\r\n.navBottom {\r\n    position: fixed;\r\n    left: 0;\r\n    bottom: 0;\r\n    background-color: #fff;\r\n    z-index: 1000;\r\n}\r\n\r\n.icon-block {\r\n    padding: 0 15px;\r\n}\r\n\r\n.icon-block .material-icons {\r\n    font-size: inherit;\r\n}\r\n\r\n#map-canvas {\r\n    width: 100%;\r\n    height: 300px;\r\n    margin: 0;\r\n    padding: 15px;\r\n    color: black;\r\n}\r\n\r\n.modal {\r\n    color: black;\r\n\r\n}\r\n\r\n/* match the width of the side bar */\r\n.content {\r\n    padding-left: 200px;\r\n}\r\n\r\n@media only screen and (max-width: 992px) {\r\n    .content {\r\n        padding-left: 0;\r\n    }\r\n}\r\n", ""]);
 
 // exports
 
@@ -17723,11 +17785,17 @@ exports.push([module.i, "/* Custom Stylesheet */\r\n/**\r\n * Use this file to o
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {!function(){"use strict";function e(e){return!("number"!=typeof e||e!==e||e===1/0||e===-(1/0))}function t(e){return h.test(e)||s.test(e)?e+"th":u.test(e)?e.replace(u,"ieth"):a.test(e)?e.replace(a,n):e}function n(e,t){return d[t]}function o(t){var n=parseInt(t,10);if(!e(n))throw new TypeError("Not a finite number: "+t+" ("+typeof t+")");var o=String(n),r=n%100,i=r>=11&&13>=r,f=o.charAt(o.length-1);return o+(i?"th":"1"===f?"st":"2"===f?"nd":"3"===f?"rd":"th")}function r(n,o){var r,f=parseInt(n,10);if(!e(f))throw new TypeError("Not a finite number: "+n+" ("+typeof n+")");return r=i(f),o?t(r):r}function i(e){var t,n,o=arguments[1];return 0===e?o?o.join(" ").replace(/,$/,""):"zero":(o||(o=[]),0>e&&(o.push("minus"),e=Math.abs(e)),20>e?(t=0,n=x[e]):p>e?(t=e%v,n=M[Math.floor(e/v)],t&&(n+="-"+x[t],t=0)):y>e?(t=e%p,n=i(Math.floor(e/p))+" hundred"):c>e?(t=e%y,n=i(Math.floor(e/y))+" thousand,"):b>e?(t=e%c,n=i(Math.floor(e/c))+" million,"):g>e?(t=e%b,n=i(Math.floor(e/b))+" billion,"):m>e?(t=e%g,n=i(Math.floor(e/g))+" trillion,"):w>=e&&(t=e%m,n=i(Math.floor(e/m))+" quadrillion,"),o.push(n),i(t,o))}function f(e){var n=r(e);return t(n)}var l="object"==typeof self&&self.self===self&&self||"object"==typeof global&&global.global===global&&global||this,h=/(hundred|thousand|(m|b|tr|quadr)illion)$/,s=/teen$/,u=/y$/,a=/(zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)$/,d={zero:"zeroth",one:"first",two:"second",three:"third",four:"fourth",five:"fifth",six:"sixth",seven:"seventh",eight:"eighth",nine:"ninth",ten:"tenth",eleven:"eleventh",twelve:"twelfth"},v=10,p=100,y=1e3,c=1e6,b=1e9,g=1e12,m=1e15,w=9007199254740992,x=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"],M=["zero","ten","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"],z={toOrdinal:o,toWords:r,toWordsOrdinal:f}; true?("undefined"!=typeof module&&module.exports&&(exports=module.exports=z),exports.numberToWords=z):l.numberToWords=z}();
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(27)))
+module.exports = __webpack_require__.p + "499051f7d7fbbca764627d886852b781.jpg";
 
 /***/ }),
 /* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {!function(){"use strict";function e(e){return!("number"!=typeof e||e!==e||e===1/0||e===-(1/0))}function t(e){return h.test(e)||s.test(e)?e+"th":u.test(e)?e.replace(u,"ieth"):a.test(e)?e.replace(a,n):e}function n(e,t){return d[t]}function o(t){var n=parseInt(t,10);if(!e(n))throw new TypeError("Not a finite number: "+t+" ("+typeof t+")");var o=String(n),r=n%100,i=r>=11&&13>=r,f=o.charAt(o.length-1);return o+(i?"th":"1"===f?"st":"2"===f?"nd":"3"===f?"rd":"th")}function r(n,o){var r,f=parseInt(n,10);if(!e(f))throw new TypeError("Not a finite number: "+n+" ("+typeof n+")");return r=i(f),o?t(r):r}function i(e){var t,n,o=arguments[1];return 0===e?o?o.join(" ").replace(/,$/,""):"zero":(o||(o=[]),0>e&&(o.push("minus"),e=Math.abs(e)),20>e?(t=0,n=x[e]):p>e?(t=e%v,n=M[Math.floor(e/v)],t&&(n+="-"+x[t],t=0)):y>e?(t=e%p,n=i(Math.floor(e/p))+" hundred"):c>e?(t=e%y,n=i(Math.floor(e/y))+" thousand,"):b>e?(t=e%c,n=i(Math.floor(e/c))+" million,"):g>e?(t=e%b,n=i(Math.floor(e/b))+" billion,"):m>e?(t=e%g,n=i(Math.floor(e/g))+" trillion,"):w>=e&&(t=e%m,n=i(Math.floor(e/m))+" quadrillion,"),o.push(n),i(t,o))}function f(e){var n=r(e);return t(n)}var l="object"==typeof self&&self.self===self&&self||"object"==typeof global&&global.global===global&&global||this,h=/(hundred|thousand|(m|b|tr|quadr)illion)$/,s=/teen$/,u=/y$/,a=/(zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)$/,d={zero:"zeroth",one:"first",two:"second",three:"third",four:"fourth",five:"fifth",six:"sixth",seven:"seventh",eight:"eighth",nine:"ninth",ten:"tenth",eleven:"eleventh",twelve:"twelfth"},v=10,p=100,y=1e3,c=1e6,b=1e9,g=1e12,m=1e15,w=9007199254740992,x=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"],M=["zero","ten","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"],z={toOrdinal:o,toWords:r,toWordsOrdinal:f}; true?("undefined"!=typeof module&&module.exports&&(exports=module.exports=z),exports.numberToWords=z):l.numberToWords=z}();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28)))
+
+/***/ }),
+/* 28 */
 /***/ (function(module, exports) {
 
 var g;
@@ -17754,7 +17822,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17762,7 +17830,7 @@ module.exports = g;
 
 var _jquery = _interopRequireDefault(__webpack_require__(0));
 
-var _loadGoogleMapsApi = _interopRequireDefault(__webpack_require__(29));
+var _loadGoogleMapsApi = _interopRequireDefault(__webpack_require__(30));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17831,7 +17899,7 @@ function initialize(googleMap) {
 });
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;;(function (root, factory) {  // eslint-disable-line
@@ -17915,7 +17983,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;;(function (root
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "b2aec5a3a96411e04e0f31043b398b26.gif";

@@ -12,35 +12,58 @@
     <!--<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
 </head>
 <body>
+<!-- Modal Structure -->
+<div id="modal1" class="modal bottom-sheet ">
+    <div class="modal-content">
+        <h4>This is a Modal</h4>
+        <p>For now this servers as a proof of concept, it may be useful in the future for say contact information or as a settings menu</p>
+    </div>
+    <button id="enhance" class="waves-effect waves-light btn-large scale-transition">I am animated!
+    </button>
+    <div class="modal-footer">
+        <a  class="modal-action modal-close waves-effect waves-green btn-flat">Click me to close, or anywhere outside the modal</a>
+    </div>
+</div>
+
+<nav class="black darken-4 " role="navigation">
+    <div class="nav-wrapper  container">
+        <div class="nav-wrapper">
+            <a class="brand-logo">My Logo </a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="#index-banner">Section 1</a></li>
+                <li><a href="#information">Section 2</a></li>
+                <li><a href="#uploads">Section 3</a></li>
+                <li><a class="waves-effect  waves-light modal-trigger" href="#modal1">About</a></li>
+            </ul>
+
+            <!-- Modal Trigger -->
 
 
-<nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container">
-        <a id="logo-container" href="#" class="brand-logo right">Logo</a>
+            <!--side menu-->
+            <ul id="slide-out" class="side-nav fixed border-right light-green lighten-4">
+                <li><a href="#index-banner">Section 1</a></li>
+                <li><a href="#information">Section 2</a></li>
+                <li><a href="#uploads">Section 3</a></li>
+                <li><a class="waves-effect  waves-light modal-trigger" href="#modal1">About</a></li>
+                <li class='navBottom'><a class="waves-effect  waves-light modal-trigger" href="#modal1">About</a></li>
 
-        <!--side menu-->
-
-        <ul id="slide-out" class="side-nav fixed">
-            <li><a href="#!">First Sidebar Link</a></li>
-            <li><a href="#!">Second Sidebar Link</a></li>
-        </ul>
-        <a href="#" data-activates="slide-out" class="button-collapse" id="navButton"><i class="material-icons">menu</i></a>
-
+            </ul>
+            <a  data-activates="slide-out" class="button-collapse" id="navButton"><i
+                    class="material-icons">menu</i></a>
+        </div>
     </div>
 
-
 </nav>
-<div class="content">
-    <div class="section no-pad-bot" id="index-banner">
+
+<div class="content green lighten-5">
+    <div class="section no-pad-bot green lighten-4 " id="index-banner">
         <div class="container">
             <br><br>
-            <h1 class="header center orange-text">Starter Template</h1>
+            <h1 class="header center orange-text">Welcome!</h1>
             <div class="row center">
-                <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+                <h5 class="header col s12 light white-text">This site is an in-progress project. The final aim is to display a gallery</h5>
             </div>
             <div class="row center">
-                <a href="http://materializecss.com/getting-started.html" id="download-button"
-                   class="btn-large waves-effect waves-light orange">Get Started</a>
             </div>
             <br><br>
 
@@ -49,143 +72,136 @@
 
 
     <div class="container">
-        <div class="section">
+        <div id="information" class="section">
 
             <!--   Icon Section   -->
             <div class="row">
                 <div class="col s12 m4">
                     <div class="icon-block">
                         <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
-                        <h5 class="center">Speeds up development</h5>
+                        <h5 class="center">Functionality so Far</h5>
 
-                        <p class="light">We did most of the heavy lifting for you to provide a default stylings that
-                            incorporate our custom components. Additionally, we refined animations and transitions to
-                            provide a smoother experience for developers.</p>
+                        <p class="light"> The website has a responsive layout in that it automatically can adjust
+                            to the browser's screen, making it adapt for mobile usage. Ths sidebar is useful for navigation. It remains
+                        visible for large-enough screens so that even when scrolling down on the page the user can easily navigate
+                        around.
+                        Files can be uploaded to the site (static, there is no backend yet), when it is an image it is displayed.
+                        The image can be zoomed in on by clicking it.</p>
                     </div>
                 </div>
 
                 <div class="col s12 m4">
                     <div class="icon-block">
                         <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-                        <h5 class="center">User Experience Focused</h5>
+                        <h5 class="center">Interactivity</h5>
 
-                        <p class="light">By utilizing elements and principles of Material Design, we were able to create
-                            a
-                            framework that incorporates components and animations that provide more feedback to users.
-                            Additionally, a single underlying responsive system across all platforms allow for a more
-                            unified user experience.</p>
+                        <p class="light">Currently the user can scroll through the page using the navigation links on the top header, or side
+                            navigation. Doing so will smoothly redirect them to the section on the page that the link refers to. The website currently
+                        takes in drag-and-drop files (of any kind), it checks if it is able to display a thumbnail for that file type (JPEG, PNG, GIF, ..).
+                        If it can, the image will be displayed after processing in a neat grid layout. The sidebar can be dragged in for mobile users.
+                        Furthermore, when clicking the 'about' link a modal wil open displaying information regarding the site, perhaps contact info at a later date.
+                            <br> <br> Try it! drag an image onto the site, it will be displayed in Section 2. Alternatively you can click the upload button below </p>
                     </div>
+
                 </div>
 
                 <div class="col s12 m4">
                     <div class="icon-block">
                         <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
-                        <h5 class="center">Easy to work with</h5>
+                        <h5 class="center">Playground</h5>
 
-                        <p class="light">We have provided detailed documentation as well as specific code examples to
-                            help
-                            new users get started. We are also always open to feedback and can answer any questions a
-                            user
-                            may have about Materialize.</p>
+                        <p class="light"> I am experimenting with different plugins and API's. I have settled on the Dropzone.js module for file handling.
+                        The website uses a Materialize template that uses a grid layout and jQuery plugins for interactive elements, that respond
+                        nicely for different screen sizes.
+                        I initially focused on having a robust deployment setup using Webpack for combining my files and modules into a single bundle, this includes
+                            loaders for files, HTML pages, Javascript, CSS and custom fonts. Using Babel I'm able to write my code in ECMAScript 6 and still support
+                            older browsers. This setup allows me to have a modularized approach while making it easy to compile the final site and upload it to
+                            github pages. Of course I use a git repository for version control, making it easy to revert when problems arise.
+                        </p>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <div class='section'>
+        <div id="uploads" class='section'>
             <div class="row">
-                <div class="col s12 center card-panel teal lighten-2 pulse">
+                <div class="col s12 center card-panel teal lighten-2">
                     <form action="/file-upload"
-                          id="dropzone">Click me to upload files
+                          id="dropzone">Click me to upload files, or just drag and drop to anywhere on the page
                     </form>
                 </div>
             </div>
         </div>
 
-        <div class="images">
-          <img class="materialboxed" src="https://lorempixel.com/250/250/nature/1">
+        <div class="images ">
         </div>
+    </div>
 
-        <div  class="files" id="previews">
-            <div id="template" class="file-row">
-                <!-- This is used as the file preview template -->
-                <div>
-                    <span class="preview"><img data-dz-thumbnail /></span>
-                </div>
-                <div>
-                    <p class="name" data-dz-name></p>
-                    <strong class="error text-danger" data-dz-errormessage></strong>
-                </div>
-                <div>
-                    <p class="size" data-dz-size></p>
-                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-                    </div>
-                </div>
-                <div>
-                    <button class='btn start'>
-                        <span>Start</span>
-                    </button>
-                    <button data-dz-remove class="btn cancel">
-                        <span>Cancel</span>
-                    </button>
-                    <button data-dz-remove class="btn">
-
-                        <span>Delete</span>
-                    </button>
+    <div class="files" id="previews">
+        <div id="template" class="file-row">
+            <!-- This is used as the file preview template -->
+            <div>
+                <span class="preview"><img data-dz-thumbnail/></span>
+            </div>
+            <div>
+                <p class="name" data-dz-name></p>
+                <strong class="error text-danger" data-dz-errormessage></strong>
+            </div>
+            <div>
+                <p class="size" data-dz-size></p>
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0"
+                     aria-valuemax="100" aria-valuenow="0">
+                    <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
                 </div>
             </div>
+            <div>
+                <button class='btn start'>
+                    <span>Start</span>
+                </button>
+                <button data-dz-remove class="btn cancel">
+                    <span>Cancel</span>
+                </button>
+                <button data-dz-remove class="btn">
 
+                    <span>Delete</span>
+                </button>
+            </div>
         </div>
+
+    </div>
 
 
     <footer class="page-footer orange">
         <div class="container">
 
-            <!-- Modal Trigger -->
-            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-
-            <!-- Modal Structure -->
-            <div id="modal1" class="modal bottom-sheet">
-                <div class="modal-content">
-                    <h4>Modal Header</h4>
-                    <p>A bunch of text</p>
-                </div>
-                <button id="enhance" class="waves-effect waves-light btn-large scale-transition">CLICK ME REMOVE ME
-                    FANCILY
-                </button>
-                <div class="modal-footer">
-                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-                </div>
-            </div>
 
             <div class="row">
                 <div class="col l6 s12">
-                    <h5 class="white-text">Company Bio</h5>
-                    <p class="grey-text text-lighten-4">We are a team of college students working on this project like
-                        it's
-                        our full time job. Any amount would help support and continue development on this project and is
-                        greatly appreciated.</p>
+                    <h5 class="white-text">Fancy section for more functionality</h5>
+                    <p class="grey-text text-lighten-4">Currently this section is simply reserved for testing out new modules.
+                    For instance below I have used the Google Maps API to display your current location with a marker on the exact place, as found
+                    by the HTML5 navigator GPS functionality if enabled/available. If it cannot be found the area will simply display Eindhoven. You
+                    can click on the marker for a pop-up with some text.</p>
 
 
                 </div>
                 <div class="col l3 s12">
-                    <h5 class="white-text">Settings</h5>
+                    <h5 class="white-text">Placeholder links</h5>
                     <ul>
-                        <li><a class="white-text" href="#!">Link 1</a></li>
-                        <li><a class="white-text" href="#!">Link 2</a></li>
-                        <li><a class="white-text" href="#!">Link 3</a></li>
-                        <li><a class="white-text" href="#!">Link 4</a></li>
+                        <li><a class="white-text">Link 1</a></li>
+                        <li><a class="white-text" >Link 2</a></li>
+                        <li><a class="white-text" >Link 3</a></li>
+                        <li><a class="white-text" >Link 4</a></li>
                     </ul>
                 </div>
                 <div class="col l3 s12">
-                    <h5 class="white-text">Connect</h5>
+                    <h5 class="white-text">Some more sectioning</h5>
                     <ul>
-                        <li><a class="white-text" href="#!">Link 1</a></li>
-                        <li><a class="white-text" href="#!">Link 2</a></li>
-                        <li><a class="white-text" href="#!">Link 3</a></li>
-                        <li><a class="white-text" href="#!">Link 4</a></li>
+                        <li><a class="white-text">Link 1</a></li>
+                        <li><a class="white-text" >Link 2</a></li>
+                        <li><a class="white-text" >Link 3</a></li>
+                        <li><a class="white-text" >Link 4</a></li>
                     </ul>
                 </div>
             </div>
@@ -197,7 +213,8 @@
         </div>
         <div class="footer-copyright">
             <div class="container">
-                Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+                This website has been made using an initial template from <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+            , Work in Progress for a fully fledged gallery type of site.
             </div>
         </div>
     </footer>
