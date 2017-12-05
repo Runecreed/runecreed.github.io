@@ -121,19 +121,51 @@ function dropzoneConfig() {
 }
 
 
+function onScroll(event) {
+    let scrollPos = $(document).scrollTop();
+    $('.nav-wrapper ul a').each(function () {
+        var currLink = $(this);
+        var refElement = $(currLink.attr("href"));
+        if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
+            $('#slide-out ul li a').removeClass("active");
+            currLink.addClass("active");
+        }
+        else {
+            currLink.removeClass("active");
+        }
+    });
+}
+
 $(document).ready(function (e) {
 
-    let $sideMenu = $('#navButton');
-    addImage();
+    $(document).on("scroll", onScroll);
+
+    //smoothscroll
+    $('a[href^="#"]').on('click', function (e) {
+        e.preventDefault();
+        $(document).off("scroll");
+        $('a').each(function () {
+            $(this).removeClass('active');
+        });
+        $(this).addClass('active');
+
+        let target = this.hash,
+            $target = $(target);
+        $('html, body').stop().animate({
+            'scrollTop': $target.offset().top + 2
+        }, 500, 'swing', function () {
+            window.location.hash = target;
+            $(document).on("scroll", onScroll);
+        });
+    });
+
 
     dropzoneConfig();
 
+    // Initialize the side navigation menu
+    let $sideMenu = $('#navButton');
 
     $('#modal1').modal('open');
-
-    $('#enhance').click((event) => {
-        enhance(event.target);
-    });
 
     $sideMenu.sideNav({
         "menuWidth": 200, // Default is 300
@@ -144,5 +176,4 @@ $(document).ready(function (e) {
 
 
 });
-
 // AddImage('./src/img/panda.gif');

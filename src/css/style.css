@@ -9,7 +9,9 @@
 .side-nav.border-right {
     border-right: black solid medium;
 }
-
+.brand-logo {
+    margin-left: 10%;
+}
 .imageThumbnail {
     width: 100%;
     height: 100%;
@@ -25,6 +27,13 @@
 
     background-size: cover;
 
+}
+.navBottom {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: #fff;
+    z-index: 1000;
 }
 
 .icon-block {
