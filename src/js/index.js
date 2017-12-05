@@ -13,7 +13,7 @@ import './maps.js';
 //  Import images
 import panda from '../img/panda.gif';
 
-var caroucelItems = 1;  //  Number of items in the caroucel initially
+var thumbnails = 0; //  Number thumbnails displayed
 
 function addImage() {
     let $content = $(".content");
@@ -46,10 +46,12 @@ function enhance(target) {
     });
 }
 
-function resetCarousel() {
-    $('.carousel').removeClass("initialized");
-    $('.carousel').carousel();
+function appear(target) {
+    let $target = $(target);
+    console.log($target);
+    $target.removeClass("scale-out");
 }
+
 
 function dropzoneConfig() {
 
@@ -72,23 +74,37 @@ function dropzoneConfig() {
 
     // When a thumbnail is made
     myDropzone.on('thumbnail', function (file, dataUri) {
-
+        let addRow;
+        let column = $('<div/>', {"class": 'col s12 m4'});
         let substrings = ['png', 'jpg', 'gif', 'svg'];
         if (substrings.some(function (v) {
                 return dataUri.toString().indexOf(v) >= 0;
             })) {
             // The added file is an image type
+            thumbnails += 1; // Increase counter
+
+            if (thumbnails % 3 === 1) { // Added image goes to a new row
+                addRow = $('<div/>', {"class": 'row'}).append(column);
+            }
 
             let $images = $('.images');
-            let newImage = `<img class="materialboxed" src=${dataUri}>`;
-            $images.append(newImage);
-
-            //  new element added, reinitialize the method
+            let $newImage = $(`<img class="materialboxed imageThumbnail scale-transition scale-out" src=${dataUri}>`);
+            column.append($newImage);
+            if (addRow) { // Add a new row to the container with the image in a column
+                $images.append(addRow);
+            } else { // No new row needed, just add the column to the last row present in the image Display
+                $images.children().last().append(column);
+            }
+            //  New element added, reinitialize the method
             $('.materialboxed').materialbox();
+
+            // fancy show of the image
+            window.setTimeout(() => appear($newImage), 200); // .2 seconds
         }
+        // Not an image
     });
 
-// When file is added
+    // When file is added
     myDropzone.on("addedfile", function (file) {
         // Hookup the start button
         // Console.log(file.previewElement);
