@@ -123,11 +123,11 @@ function dropzoneConfig() {
 
 function onScroll(event) {
     let scrollPos = $(document).scrollTop();
-    $('.nav-wrapper ul a').each(function () {
+    $('.nav a').each(function () {
         var currLink = $(this);
         var refElement = $(currLink.attr("href"));
         if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
-            $('#slide-out ul li a').removeClass("active");
+            $('.nav a').removeClass("active");
             currLink.addClass("active");
         }
         else {
