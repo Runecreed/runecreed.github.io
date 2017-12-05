@@ -37,7 +37,7 @@ function getImageURL(input) {
     }
 }
 
-
+// not used atm
 function enhance(target) {
     let $target = $(target);
     console.log($target);
@@ -173,7 +173,9 @@ $(document).ready(function (e) {
         "closeOnClick": true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
         "draggable": true // Choose whether you can drag to open on touch screens,
     });
-
+    $('#enhance').click(function() {
+        enhance($(this));
+    });
 
 });
 // AddImage('./src/img/panda.gif');
