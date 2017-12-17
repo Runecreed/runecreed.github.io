@@ -3,6 +3,7 @@
     <extensionMap>
       <mapping pattern="fonts" type="PLAIN_TEXT" />
       <mapping pattern="npm" type="PLAIN_TEXT" />
+      <mapping pattern="schema" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
 </application>
