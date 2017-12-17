@@ -1,40 +1,226 @@
-<!doctype html>
-<html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Starter Template - Materialize</title>
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <!-- Place favicon.ico in the root directory -->
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Dont think i need these since webpack imports css -->
+    <!--<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
+    <!--<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
+</head>
+<body class="green lighten-5">
+<!-- Modal Structure -->
+<div id="modal1" class="modal bottom-sheet ">
+    <div class="modal-content">
+        <h4>This is a Modal</h4>
+        <p>For now this servers as a proof of concept, it may be useful in the future for say contact information or as
+            a settings menu</p>
+    </div>
+    <button id="enhance" class="waves-effect waves-light btn-large scale-transition">I am animated!
+    </button>
+    <div class="modal-footer">
+        <a class="modal-action modal-close waves-effect waves-green btn-flat">Click me to close, or anywhere outside the
+            modal</a>
+    </div>
+</div>
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-    </head>
-    <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+<nav class="black darken-4 " role="navigation">
+    <div class="nav-wrapper  container">
+        <div class="nav-wrapper">
+            <a class="brand-logo">My Logo </a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="#index-banner">Section 1</a></li>
+                <li><a href="#information">Section 2</a></li>
+                <li><a href="#uploads">Section 3</a></li>
+                <li><a class="waves-effect  waves-light modal-trigger" href="#modal1">About</a></li>
+            </ul>
 
-        <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+            <!-- Modal Trigger -->
 
-        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='https://www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
-        </script>
-    </body>
+            <!--side menu-->
+            <ul id="slide-out" class="side-nav fixed border-right light-green lighten-4">
+                <li><a href="#index-banner">Section 1</a></li>
+                <li><a href="#information">Section 2</a></li>
+                <li><a href="#uploads">Section 3</a></li>
+                <li><a class="waves-effect  waves-light modal-trigger" href="#modal1">About</a></li>
+
+            </ul>
+            <a data-activates="slide-out" class="button-collapse" id="navButton"><i
+                    class="material-icons">menu</i></a>
+        </div>
+    </div>
+
+</nav>
+
+<div class="content green lighten-5">
+    <div class="section no-pad-bot green lighten-4 " id="index-banner">
+        <div class="container">
+            <br><br>
+            <h1 class="header center orange-text">Welcome!</h1>
+            <div class="row center">
+                <h5 class="header col s12 light white-text">This site is an in-progress project. The final aim is to
+                    display a gallery</h5>
+            </div>
+            <div class="row center">
+            </div>
+            <br><br>
+
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div id="information" class="section">
+
+            <!--   Icon Section   -->
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="icon-block">
+                        <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
+                        <h5 class="center">Functionality so Far</h5>
+
+                        <p class="light"> The website has a responsive layout in that it automatically can adjust
+                            to the browser's screen, making it adapt for mobile usage. Ths sidebar is useful for
+                            navigation. It remains
+                            visible for large-enough screens so that even when scrolling down on the page the user can
+                            easily navigate
+                            around.
+                            Files can be uploaded to the site (static, there is no backend yet), when it is an image it
+                            is displayed.
+                            The image can be zoomed in on by clicking it.</p>
+                    </div>
+                </div>
+
+                <div class="col s12 m4">
+                    <div class="icon-block">
+                        <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+                        <h5 class="center">Interactivity</h5>
+
+                        <p class="light">Currently the user can scroll through the page using the navigation links on
+                            the top header, or side
+                            navigation. Doing so will smoothly redirect them to the section on the page that the link
+                            refers to. The website currently
+                            takes in drag-and-drop files (of any kind), it checks if it is able to display a thumbnail
+                            for that file type (JPEG, PNG, GIF, ..).
+                            If it can, the image will be displayed after processing in a neat grid layout. The sidebar
+                            can be dragged in for mobile users.
+                            Furthermore, when clicking the 'about' link a modal wil open displaying information
+                            regarding the site, perhaps contact info at a later date.
+                            <br> <br> Try it! drag an image onto the site, it will be displayed in Section 2.
+                            Alternatively you can click the upload button below </p>
+                    </div>
+
+                </div>
+
+                <div class="col s12 m4">
+                    <div class="icon-block">
+                        <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
+                        <h5 class="center">Playground</h5>
+
+                        <p class="light"> I am experimenting with different plugins and API's. I have settled on the
+                            Dropzone.js module for file handling.
+                            The website uses a Materialize template that uses a grid layout and jQuery plugins for
+                            interactive elements, that respond
+                            nicely for different screen sizes.
+                            I initially focused on having a robust deployment setup using Webpack for combining my files
+                            and modules into a single bundle, this includes
+                            loaders for files, HTML pages, Javascript, CSS and custom fonts. Using Babel I'm able to
+                            write my code in ECMAScript 6 and still support
+                            older browsers. This setup allows me to have a modularized approach while making it easy to
+                            compile the final site and upload it to
+                            github pages. Of course I use a git repository for version control, making it easy to revert
+                            when problems arise.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="uploads" class='section'>
+            <div class="row">
+                <div class="col s12 center card-panel teal lighten-2">
+                    <div
+                            id="dropzone">Click me to upload files, or just drag and drop to anywhere on the page
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="images ">
+        </div>
+    </div>
+
+    <div class="files green lighten-5" id="previews">
+        <div id="template" class="file-row">
+            <!-- This is used as the file preview template -->
+        </div>
+    </div>
+
+</div>
+
+
+<footer class="page-footer orange">
+    <div class="container">
+
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Fancy section for more functionality</h5>
+                <p class="grey-text text-lighten-4">Currently this section is simply reserved for testing out new
+                    modules.
+                    For instance below I have used the Google Maps API to display your current location with a marker on
+                    the exact place, as found
+                    by the HTML5 navigator GPS functionality if enabled/available. If it cannot be found the area will
+                    simply display Eindhoven. You
+                    can click on the marker for a pop-up with some text.</p>
+
+
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Placeholder links</h5>
+                <ul>
+                    <li><a class="white-text">Link 1</a></li>
+                    <li><a class="white-text">Link 2</a></li>
+                    <li><a class="white-text">Link 3</a></li>
+                    <li><a class="white-text">Link 4</a></li>
+                </ul>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Some more sectioning</h5>
+                <ul>
+                    <li><a class="white-text">Link 1</a></li>
+                    <li><a class="white-text">Link 2</a></li>
+                    <li><a class="white-text">Link 3</a></li>
+                    <li><a class="white-text">Link 4</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="map-canvas"></div>
+
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            This website has been made using an initial template from <a class="orange-text text-lighten-3"
+                                                                         href="http://materializecss.com">Materialize</a>
+            , Work in Progress for a fully fledged gallery type of site.
+        </div>
+    </div>
+</footer>
+
+
+<!--  Scripts-->
+<!--<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
+<!--<script src="js/materialize.js"></script>-->
+<!--<script src="js/init.js"></script>-->
+
+<!--Webpack creates the script tags for me don't manually do it as that will duplicate -->
+
+<script type="text/javascript" src="bundle.js"></script></body>
 </html>
