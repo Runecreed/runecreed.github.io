@@ -22,8 +22,12 @@
           <option name="url" value="https://github.com/DDCSLearning/authenticationIntro.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/mdn/express-locallibrary-tutorial.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="D:\Github Project Repository\webTech-Server" />
+    <option name="cloneParentDir" value="D:\Github Project Repository\NodeExpressExample" />
   </component>
 </application>
