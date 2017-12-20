@@ -1,6 +1,7 @@
 <application>
   <component name="FileTypeManager" version="17">
     <extensionMap>
+      <mapping pattern="user" type="JavaScript" />
       <mapping pattern="fonts" type="PLAIN_TEXT" />
       <mapping pattern="npm" type="PLAIN_TEXT" />
       <mapping pattern="schema" type="PLAIN_TEXT" />
