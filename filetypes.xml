@@ -4,6 +4,7 @@
       <mapping pattern="user" type="JavaScript" />
       <mapping pattern="fonts" type="PLAIN_TEXT" />
       <mapping pattern="npm" type="PLAIN_TEXT" />
+      <mapping pattern="NavbarContainer.js" type="PLAIN_TEXT" />
       <mapping pattern="schema" type="PLAIN_TEXT" />
       <mapping pattern="html" type="PLAIN_TEXT" />
     </extensionMap>

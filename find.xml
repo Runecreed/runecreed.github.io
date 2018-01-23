@@ -1,7 +1,7 @@
 <application>
   <component name="FindSettings">
-    <option name="customScope" value="Project 'webTech'" />
-    <option name="defaultScopeName" value="Project 'webTech'" />
-    <option name="SEARCH_SCOPE" value="Project 'webTech'" />
+    <option name="customScope" value="File '...\components\navbar\NavbarContainer.js [Next]'" />
+    <option name="defaultScopeName" value="File '...\components\navbar\NavbarContainer.js [Next]'" />
+    <option name="SEARCH_SCOPE" value="File '...\components\navbar\NavbarContainer.js [Next]'" />
   </component>
 </application>
