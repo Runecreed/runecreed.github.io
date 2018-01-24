@@ -1,0 +1,16 @@
+<application>
+  <component name="libraryTable">
+    <library name="node_modules" type="javaScript">
+      <properties>
+        <option name="frameworkName" value="node_modules" />
+        <sourceFilesUrls>
+          <item url="file://D:/Github Project Repository/Next/node_modules" />
+        </sourceFilesUrls>
+      </properties>
+      <CLASSES>
+        <root url="file://D:/Github Project Repository/Next/node_modules" />
+      </CLASSES>
+      <SOURCES />
+    </library>
+  </component>
+</application>
