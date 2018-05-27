@@ -6,14 +6,14 @@
       <option name="description" />
       <option name="exitCodeBehavior" value="ERROR" />
       <option name="fileExtension" value="scss" />
-      <option name="immediateSync" value="true" />
+      <option name="immediateSync" value="false" />
       <option name="name" value="SCSS" />
       <option name="output" value="$FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map" />
       <option name="outputFilters">
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="program" value="" />
+      <option name="program" value="C:/Ruby25-x64/bin/scss.bat" />
       <option name="runOnExternalChanges" value="true" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="true" />
@@ -21,7 +21,7 @@
       <envs />
     </TaskOptions>
     <TaskOptions isEnabled="true">
-      <option name="arguments" value="--no-cache --update $FileName$:$FileNameWithoutExtension$.css" />
+      <option name="arguments" value="--no-cache --update $FileName$:$FileParentDir$/css/$FileNameWithoutExtension$.css&quot; " />
       <option name="checkSyntaxErrors" value="true" />
       <option name="description" />
       <option name="exitCodeBehavior" value="ERROR" />
