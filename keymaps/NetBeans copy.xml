@@ -2,6 +2,9 @@
   <action id="$Copy">
     <keyboard-shortcut first-keystroke="ctrl c" />
   </action>
+  <action id="EditorCloneCaretBelow">
+    <keyboard-shortcut first-keystroke="alt end" />
+  </action>
   <action id="EditorCopy">
     <keyboard-shortcut first-keystroke="ctrl c" />
   </action>
