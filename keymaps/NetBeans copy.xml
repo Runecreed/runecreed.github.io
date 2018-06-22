@@ -11,6 +11,7 @@
   <action id="EditorCopy">
     <keyboard-shortcut first-keystroke="ctrl c" />
   </action>
+  <action id="EditorDeleteLine" />
   <action id="ImplementMethods">
     <keyboard-shortcut first-keystroke="ctrl insert" />
   </action>
@@ -21,6 +22,9 @@
   <action id="NewElementSamePlace" />
   <action id="QuickDocCopy">
     <keyboard-shortcut first-keystroke="ctrl c" />
+  </action>
+  <action id="RevealIn">
+    <keyboard-shortcut first-keystroke="ctrl e" />
   </action>
   <action id="SurroundWithEmmet">
     <keyboard-shortcut first-keystroke="ctrl alt slash" />
