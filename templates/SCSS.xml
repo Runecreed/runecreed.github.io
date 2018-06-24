@@ -1,0 +1,7 @@
+<templateSet group="SCSS">
+  <template name="fluid-type" value="@include fluid-type($min-width, $max-width, $font-size-large, $max_font);" description="Fluid Typography" toReformat="true" toShortenFQNames="true">
+    <context>
+      <option name="CSS_DECLARATION_BLOCK" value="true" />
+    </context>
+  </template>
+</templateSet>
